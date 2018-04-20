@@ -16,12 +16,15 @@ Object.defineProperties(crawl, {
                         let company = result[i]
                         let stockNumber = company["\u516c\u53f8\u4ee3\u865f"]
                         if(stockNumber){
-                            new Promise((resolve, reject)=>{
-                                this.crawlStock(stockNumber, new Date())
-                                return 
-                            }).catch((e)=>{
-                                console.error(`crawlStock ${stockNumber} error : ${e}` )
-                            })
+                            setTimeout(()=>{
+                                new Promise((resolve, reject)=>{
+                                    this.crawlStock(stockNumber, new Date())
+                                    return 
+                                }).catch((e)=>{
+                                    console.error(`crawlStock ${stockNumber} error : ${e}` )
+                                })
+                            }, i*1500)
+                            
                         }else{
                             console.log("company \u516c\u53f8\u4ee3\u865f not exist!.")
                         }
