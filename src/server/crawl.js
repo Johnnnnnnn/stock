@@ -8,11 +8,25 @@ const db = require('../db')
 
 const crawl = {}
 Object.defineProperties(crawl, {
-    test : {
+    crawl : {
         value(){
-            var now = new Date();
-
-            var title = now.Format("yyyy-MM-dd");
+            this.crawlListedCompany()
+                .then((result)=>{
+                    for(let i = 0 ; i < result.length ; i++){
+                        let company = result[i]
+                        let stockNumber = company["\u516c\u53f8\u4ee3\u865f"]
+                        if(stockNumber){
+                            new Promise((resolve, reject)=>{
+                                this.crawlStock(stockNumber, new Date())
+                                return 
+                            }).catch((e)=>{
+                                console.error(`crawlStock ${stockNumber} error : ${e}` )
+                            })
+                        }else{
+                            console.log("company \u516c\u53f8\u4ee3\u865f not exist!.")
+                        }
+                    }
+                })
         }
     },
     crawlEquityDist : {
@@ -24,7 +38,6 @@ Object.defineProperties(crawl, {
             geEquityProcess.then((result)=>{
                 db.saveEquityDist(result)
                  let tomorrow = date.Tomorrow()
-                    console.log(tomorrow.IsFuture())
                     if(!tomorrow.IsFuture()){
                          setTimeout(()=>{
                             this.crawlEquityDist(stockNumber, date.Tomorrow(), 0)
@@ -90,7 +103,7 @@ Object.defineProperties(crawl, {
                 db.savePrice(result)
                 setTimeout(()=>{
                     this.crawlPrice(stockNumber, date.NextMonth())
-                }, 2000)
+                }, 3000)
             }).catch((reject)=>{
                 console.log(`reject : ${reject}`)
             })
@@ -99,7 +112,7 @@ Object.defineProperties(crawl, {
 	crawlStock : {
         value(stockNumber, date){
             new Promise(()=> {this.crawlPrice(stockNumber, date)})
-            new Promise(()=> {this.crawlEquityDist(stockNumber, date)})
+            // new Promise(()=> {this.crawlEquityDist(stockNumber, date)})
         }
     },
     getEquityDist : {
@@ -107,7 +120,7 @@ Object.defineProperties(crawl, {
             let getEquityDist
             return new Promise((resolve, reject)=>{
                 let postData = `scaDate=${date}&SqlMethod=StockNo&StockNo=${stockNumber}&REQ_OPR=SELECT&clkStockNo=${stockNumber}`
-                var options = {
+                let options = {
                     host: 'www.tdcc.com.tw',
                     port: 443,
                     path: '/smWeb/QryStockAjax.do?',
@@ -138,7 +151,7 @@ Object.defineProperties(crawl, {
                             data.push(tmp)
                         })
                         resolve({
-                            number : stockNumber, 
+                            number : stockNumber.toString(), 
                             date : date,
                             data : data
                         })
@@ -185,7 +198,7 @@ Object.defineProperties(crawl, {
                                 const parsedData = JSON.parse(rawData);
                                 if(parsedData.stat == "OK"){
                                     resolve({
-                                        number : stockNumber,
+                                        number : stockNumber.toString(),
                                         date : date,
                                         data : parsedData
                                     }); 

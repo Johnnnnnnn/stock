@@ -13,12 +13,26 @@ Object.defineProperties(module.exports, {
 			})
 		}
 	},
+	findStock : {
+		value(collection, number){
+			return new Promise((resolve, reject)=>{
+				let query = {
+					number : number
+				}
+				collection.find(query).toArray(function(err, result) {
+    				if (err) throw err;
+    				console.log(result);
+    				resolve()
+  				});
+			})
+		}
+	},
 	insertOne : {
 		value(collection, data){
 			return new Promise((resolve, reject)=>{
 				collection.insertOne(data, function(err, res) {
 	    			if (err) reject(err);
-    				console.log("1 document inserted into equityDist!");
+    				console.log(`${data.date} ${data.number} inserted into equityDist!`);
     				resolve()
   				});
 			})

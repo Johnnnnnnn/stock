@@ -13,6 +13,20 @@ Object.defineProperties(module.exports, {
 			})
 		}
 	},
+	findStock : {
+		value(collection, number){
+			return new Promise((resolve, reject)=>{
+				let query = {
+					number : number
+				}
+				collection.find({}).toArray(function(err, result) {
+    				if (err) throw err;
+    				// console.log(result);
+    				resolve()
+  				});
+			})
+		}
+	},
 	insertOne : {
 		value(collection, data){
 			return new Promise((resolve, reject)=>{

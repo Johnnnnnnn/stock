@@ -4,7 +4,7 @@
 	[https://stackoverflow.com/questions/30668326/what-is-the-difference-between-using-constructor-vs-getinitialstate-in-react-r]
 */
 import $ from 'jquery'
-import Stock from '../stock'
+import Stock from '../common/stock'
 import {GoogleCharts} from 'google-charts';
 
 class app extends React.Component {

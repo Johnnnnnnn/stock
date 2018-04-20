@@ -8,13 +8,12 @@ const app = express();
 */
 app.use(express.static('dist'));
 
-app.get('/stock/:stockNumber', function(req, res) {
-	db.getStock(req.params.stockNumber).then((result)=>{
+app.get('/stock/:stockNumber/:collectionName*?', function(req, res) {
+	db.getStock(req.params.stockNumber, req.params.collection).then((result)=>{
 		res.send(result)
 	}).catch((reject)=>{
 		res.send(reject)
 	})
-	// crawl.getData(req.params.stockNumber, 2018, 2).then((result) => {res.send(result);})
 });
 
 
