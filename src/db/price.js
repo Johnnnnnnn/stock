@@ -32,7 +32,7 @@ Object.defineProperties(module.exports, {
 			return new Promise((resolve, reject)=>{
 				collection.insertOne(data, function(err, res) {
 	    			if (err) reject(err);
-    				console.log("1 document inserted into price!");
+    				console.log(`${data.number} ${data.date} inserted into price!`);
     				resolve()
   				});
 			})

@@ -23,7 +23,7 @@ Object.defineProperties(crawl, {
                                 }).catch((e)=>{
                                     console.error(`crawlStock ${stockNumber} error : ${e}` )
                                 })
-                            }, i*1500)
+                            }, i*2500)
                             
                         }else{
                             console.log("company \u516c\u53f8\u4ee3\u865f not exist!.")
@@ -214,7 +214,7 @@ Object.defineProperties(crawl, {
                         });
                     }
                 ).on('error', (e) => {
-                    reject(`Got error: ${e.message}`);
+                    reject(`Getting Price of ${stockNumber}/${date} by http got error: ${e.message}`);
                 });
             })
         }
