@@ -10,26 +10,30 @@ const crawl = {}
 Object.defineProperties(crawl, {
     crawl : {
         value(){
+            let promise = Promise.resolve();
             this.crawlListedCompany()
                 .then((result)=>{
+                    let delayTime = 1800
+                    let date = new Date()
                     for(let i = 0 ; i < result.length ; i++){
                         let company = result[i]
                         let stockNumber = company["\u516c\u53f8\u4ee3\u865f"]
                         if(stockNumber){
-                            setTimeout(()=>{
-                                new Promise((resolve, reject)=>{
-                                    this.crawlStock(stockNumber, new Date())
-                                    return 
-                                }).catch((e)=>{
-                                    console.error(`crawlStock ${stockNumber} error : ${e}` )
+                            promise = promise.then(()=>{
+                                return this.crawlStock(stockNumber, date)
+                            }).then(()=>{
+                                return new Promise((resolve)=>{
+                                    setTimeout(()=>{
+                                        resolve()
+                                    }, delayTime)
                                 })
-                            }, i*2500)
-                            
+                            })
                         }else{
                             console.log("company \u516c\u53f8\u4ee3\u865f not exist!.")
                         }
                     }
-                })
+                });
+            return promise
         }
     },
     crawlEquityDist : {
@@ -104,17 +108,16 @@ Object.defineProperties(crawl, {
             let getPriceProcess = crawl.getPrice(stockNumber, date)
             getPriceProcess.then((result)=>{
                 db.savePrice(result)
-                setTimeout(()=>{
-                    this.crawlPrice(stockNumber, date.NextMonth())
-                }, 3000)
             }).catch((reject)=>{
-                console.log(`reject : ${reject}`)
+                console.log(`craw Price reject : ${reject}`)
             })
         }
     },
 	crawlStock : {
         value(stockNumber, date){
-            new Promise(()=> {this.crawlPrice(stockNumber, date)})
+            return [new Promise(()=> {
+                this.crawlPrice(stockNumber, date)
+            })]
             // new Promise(()=> {this.crawlEquityDist(stockNumber, date)})
         }
     },
