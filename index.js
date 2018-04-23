@@ -1,6 +1,6 @@
 require('./src/common')
 
-let init = true
+let init = false
 if(init){
 	require('./src/db').dropDb().then(()=>{
 		run()
