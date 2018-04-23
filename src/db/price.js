@@ -47,7 +47,6 @@ Object.defineProperties(module.exports, {
 								this.update()	
 							}
 						}else{
-
 							this.insertOne(collection, data)
 						}
 						resolve()
@@ -70,7 +69,7 @@ Object.defineProperties(module.exports, {
 				collection.updateOne(query, newValue, function(err, result) {
     				if (err) reject(err);
     				console.log(`${data.number} ${data.date} update price!`)
-    				resolve(result);
+    				resolve();
   				});
 			})
 		}

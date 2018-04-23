@@ -178,7 +178,7 @@ Object.defineProperties(crawl, {
         value(stockNumber, date){
             return new Promise((resolve, reject)=>{
                 http.get(
-                    `http://www.twse.com.tw/exchangeReport/STOCK_DAY?date=${date}01&stockNo=${stockNumber}`,
+                    `http://www.twse.com.tw/exchangeReport/STOCK_DAY?date=${date.Format('yyyyMM01')}&stockNo=${stockNumber}`,
                     (res)=>{
                         const { statusCode } = res;
                         const contentType = res.headers['content-type'];
