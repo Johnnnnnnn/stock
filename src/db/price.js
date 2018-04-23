@@ -21,7 +21,7 @@ Object.defineProperties(module.exports, {
 				}
 				collection.find({}).toArray(function(err, result) {
     				if (err) throw err;
-    				resolve()
+    				resolve(result)
   				});
 			})
 		}
