@@ -19,7 +19,7 @@ Object.defineProperties(module.exports, {
 				let query = {
 					number : number
 				}
-				collection.find({}).toArray(function(err, result) {
+				collection.find(query).toArray(function(err, result) {
     				if (err) throw err;
     				resolve(result)
   				});
