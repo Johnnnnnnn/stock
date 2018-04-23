@@ -13,7 +13,7 @@ Object.defineProperties(crawl, {
             let promise = Promise.resolve();
             this.crawlListedCompany()
                 .then((result)=>{
-                    let delayTime = 1800
+                    let delayTime = 2200
                     let date = new Date()
                     for(let i = 0 ; i < result.length ; i++){
                         let company = result[i]
