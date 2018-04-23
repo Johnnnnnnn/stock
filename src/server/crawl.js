@@ -9,25 +9,22 @@ const db = require('../db')
 const crawl = {}
 Object.defineProperties(crawl, {
     crawl : {
-        value(){
+        value(startDate){
             let promise = Promise.resolve();
+            if(!startDate){
+                startDate = new Date()
+            }
             this.crawlListedCompany()
                 .then((result)=>{
                     let delayTime = 3000
-                    let date = new Date()
+                    
                     for(let i = 0 ; i < result.length ; i++){
                         let company = result[i]
                         let stockNumber = company["\u516c\u53f8\u4ee3\u865f"]
                         if(stockNumber){
                             promise = promise.then(()=>{
-                                return this.crawlStock(stockNumber, date)
-                            }).then(()=>{
-                                return new Promise((resolve)=>{
-                                    setTimeout(()=>{
-                                        resolve()
-                                    }, delayTime)
-                                })
-                            })
+                                return this.crawlStock(stockNumber, startDate)
+                            }).Delay(delayTime)
                         }else{
                             console.log("company \u516c\u53f8\u4ee3\u865f not exist!.")
                         }
@@ -60,6 +57,17 @@ Object.defineProperties(crawl, {
                     }
                 }
             })
+        }
+    },
+    crawlHistory : {
+        value(stockNumber, startDate){
+            if(!startDate.IsFuture()){
+                return this.crawlPrice(stockNumber, startDate)
+                            .Delay(3000)
+                            .then(()=>{
+                                return this.crawlHistory(stockNumber, startDate.NextMonth())
+                            })
+            }
         }
     },
     crawlListedCompany : {
@@ -111,6 +119,7 @@ Object.defineProperties(crawl, {
             }).catch((reject)=>{
                 console.log(`craw Price reject : ${reject}`)
             })
+            return getPriceProcess;
         }
     },
 	crawlStock : {
