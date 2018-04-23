@@ -19,6 +19,23 @@ function connect(collectionName){
 	})
 }
 Object.defineProperties(module.exports, {
+	dropDb : {
+		value(){
+			return new Promise((resolve, reject)=>{
+				connect()
+				.then(({collection, dbo, db})=>{
+					dbo.dropDatabase(function(err, result){
+						console.log("Error : "+err);
+						if (err) throw err;
+						console.log("Operation Success ? "+result);
+						// after all the operations with db, close it.
+						db.close();
+						resolve();
+					});
+				})
+			})
+		}
+	},
 	getStock : {
 		value(number, collectionName){
 			if(!collectionName){
