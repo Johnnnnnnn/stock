@@ -47,6 +47,7 @@ Object.defineProperties(module.exports, {
 								this.update()	
 							}
 						}else{
+
 							this.insertOne(collection, data)
 						}
 						resolve()
@@ -63,12 +64,12 @@ Object.defineProperties(module.exports, {
 					}
 				}
 				let query = {
-					date : date,
-					number : number
+					date : data.date,
+					number : data.number
 				}
-				collection.findOne(query, newValue, function(err, result) {
+				collection.updateOne(query, newValue, function(err, result) {
     				if (err) reject(err);
-    				console.log("1 document updated into price!")
+    				console.log(`${data.number} ${data.date} update price!`)
     				resolve(result);
   				});
 			})

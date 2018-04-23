@@ -203,11 +203,8 @@ Object.defineProperties(crawl, {
                             try {
                                 const parsedData = JSON.parse(rawData);
                                 if(parsedData.stat == "OK"){
-                                    resolve({
-                                        number : stockNumber.toString(),
-                                        date : date,
-                                        data : parsedData
-                                    }); 
+                                    parsedData.number = stockNumber.toString()
+                                    resolve(parsedData); 
                                 }else{
                                     reject('data not found!');
                                 }
