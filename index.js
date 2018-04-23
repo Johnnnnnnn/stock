@@ -13,11 +13,3 @@ require("webpack")(
 )
 require("./src/server/main").run()
 
-// const crawl = require('./src/server/crawl')
-// crawl.crawlListedCompany()
-// crawl.crawlStock(3008, 2017, 8)
-// let db = require('./src/db')
-// const crawl = require('./src/server/crawl')
-// crawl.getEquityDist(3008, '20180413').then((resolve)=>{
-// 	db.saveEquityDist(resolve)
-// })

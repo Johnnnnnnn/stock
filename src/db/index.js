@@ -32,15 +32,11 @@ Object.defineProperties(module.exports, {
 						return Promise.all([
 							priceCollection.findStock(
 								dbo.collection('price'), 
-								{
-									number : number
-								}
+								number
 							), 
 							equityDistCollection.findStock(
 								dbo.collection('equityDist'), 
-								{
-									number : number
-								}
+								number
 							)
 						])
 					}).then((results)=>{
