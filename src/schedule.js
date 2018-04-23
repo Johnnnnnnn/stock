@@ -5,7 +5,7 @@ let job;
 Object.defineProperties(module.exports , {
 	run : {
         value(){
-			crawl.crawl()		
+			crawl.crawl(new Date(2017, 4, 5))		
            	job = new cron.CronJob('00 00 4 * * 1-5', function() {
 			  	/*
 			   	 * Runs every day

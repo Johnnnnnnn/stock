@@ -23,7 +23,7 @@ Object.defineProperties(crawl, {
                         let stockNumber = company["\u516c\u53f8\u4ee3\u865f"]
                         if(stockNumber){
                             promise = promise.then(()=>{
-                                return this.crawlStock(stockNumber, startDate)
+                                return this.crawlHistory(stockNumber, startDate)
                             }).Delay(delayTime)
                         }else{
                             console.log("company \u516c\u53f8\u4ee3\u865f not exist!.")
