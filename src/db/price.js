@@ -6,7 +6,7 @@ Object.defineProperties(module.exports, {
 					date : date,
 					number : number
 				}
-				collection.findOne(query, {'_id': 0}, function(err, result) {
+				collection.findOne(query, {fields :{_id: 0}}, function(err, result) {
     				if (err) reject(err);
     				resolve(result);
   				});
@@ -19,7 +19,7 @@ Object.defineProperties(module.exports, {
 				let query = {
 					number : number
 				}
-				collection.find(query, {'_id': 0}).toArray(function(err, result) {
+				collection.find(query, {fields :{_id: 0}}).toArray(function(err, result) {
     				if (err) throw err;
     				resolve(result)
   				});
